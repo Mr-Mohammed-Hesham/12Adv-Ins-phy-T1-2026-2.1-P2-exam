@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚛️ التأثير الكهروضوئي - فيزياء 12 متقدم | Mr. Mohammed Hesham</title>
+<meta name="description" content="امتحان تفاعلي شامل عن التأثير الكهروضوئي - فيزياء الصف 12 المتقدم">
+<meta name="author" content="Mr. Mohammed Hesham">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Cairo', sans-serif; }
+body.en-mode { font-family: 'Inter', sans-serif; }
+.arabic-math { font-family: 'Amiri', 'Cairo', serif; }
+.correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+.incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+.timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.7; } }
+@media print { .no-print { display: none !important; } }
+.success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+.grade-excellent { background: #dcfce7; color: #166534; }
+.grade-good { background: #fef3c7; color: #92400e; }
+.grade-pass { background: #dbeafe; color: #1e40af; }
+.grade-fail { background: #fee2e2; color: #991b1b; }
+.lang-switch {
+position: fixed; top: 16px; left: 16px; z-index: 100;
+background: white; padding: 6px; border-radius: 30px;
+box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px;
+border: 2px solid #6366f1;
+}
+[dir="ltr"] .lang-switch { left: auto; right: 16px; }
+.lang-btn {
+padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold;
+transition: all 0.3s; border: none; font-size: 0.875rem;
+background: transparent; color: #6b7280;
+}
+.lang-btn.active { background: #6366f1; color: white; box-shadow: 0 2px 6px rgba(99,102,241,0.4); }
+.lang-btn:hover:not(.active) { background: #eef2ff; color: #6366f1; }
+.shuffle-badge {
+display: inline-block;
+background: linear-gradient(135deg, #6366f1, #4f46e5);
+color: white; padding: 4px 12px; border-radius: 20px;
+font-size: 0.75rem; font-weight: bold; margin-right: 8px;
+}
+.math-display {
+display: inline-block; direction: ltr;
+font-family: 'Amiri', 'Times New Roman', serif;
+font-size: 1.2em; font-style: italic;
+padding: 2px 8px; background: #eef2ff;
+border-radius: 6px; margin: 2px;
+color: #4338ca; font-weight: 600; letter-spacing: 0.5px;
+}
+.save-indicator {
+position: fixed; bottom: 20px; left: 20px; z-index: 200;
+background: #10b981; color: white; padding: 8px 16px;
+border-radius: 20px; font-size: 0.8rem; font-weight: bold;
+opacity: 0; transition: opacity 0.3s; pointer-events: none;
+box-shadow: 0 4px 12px rgba(16,185,129,0.4);
+}
+.save-indicator.show { opacity: 1; }
+.formula-box {
+background: #eef2ff; border: 2px solid #6366f1;
+border-radius: 8px; padding: 12px; margin: 10px 0;
+font-family: 'Amiri', serif;
+direction: ltr; text-align: center;
+}
+.svg-graph {
+display: block;
+margin: 12px auto;
+background: white;
+border: 2px solid #e5e7eb;
+border-radius: 12px;
+padding: 8px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.graph-container { text-align: center; margin: 10px 0; }
+.module-badge {
+display: inline-block;
+padding: 4px 16px;
+border-radius: 20px;
+font-weight: bold;
+font-size: 0.85rem;
+margin-bottom: 8px;
+}
+.module-1 { background: #eef2ff; color: #3730a3; }
+.module-2 { background: #fef3c7; color: #92400e; }
+.module-3 { background: #fce7f3; color: #9f1239; }
+.module-4 { background: #ecfdf5; color: #065f46; }
+.module-5 { background: #fee2e2; color: #991b1b; }
+.module-6 { background: #ede9fe; color: #5b21b6; }
+</style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 to-purple-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+<div class="lang-switch no-print">
+<button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+<button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+</div>
+
+<div id="saveIndicator" class="save-indicator">💾 <span data-ar="تم الحفظ" data-en="Saved">تم الحفظ</span></div>
+
+<div id="timer-container" class="max-w-5xl mx-auto mb-4 text-center no-print">
+<div class="bg-white p-4 rounded-2xl shadow-md inline-block border-2 border-indigo-100">
+<span class="text-gray-600 ml-2" data-ar="⏰ الوقت المتبقي:" data-en="⏰ Time Remaining:"> الوقت المتبقي:</span>
+<span id="timer" class="text-2xl font-bold text-indigo-700 font-mono">90:00</span>
+<span class="shuffle-badge" data-ar="⚛️ التأثير الكهروضوئي - 28 سؤال" data-en="⚛️ Photoelectric Effect - 28 Questions">⚛️ التأثير الكهروضوئي - 28 سؤال</span>
+</div>
+</div>
+
+<div class="max-w-5xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+<button onclick="toggleAnswers()" class="bg-indigo-700 hover:bg-indigo-800 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="👀 إظهار / إخفاء الإجابات" data-en="👀 Show / Hide Answers">👀 إظهار / إخفاء الإجابات</button>
+<button onclick="window.print()" class="bg-gray-700 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="🖨️ طباعة" data-en="🖨️ Print">🖨️ طباعة</button>
+<button onclick="reshuffleExam()" class="bg-gradient-to-r from-indigo-700 to-purple-600 hover:from-indigo-800 hover:to-purple-700 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="🔄 أسئلة جديدة" data-en=" New Questions">🔄 أسئلة جديدة</button>
+<button onclick="clearProgress()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition shadow cursor-pointer" data-ar="🗑️ مسح التقدم" data-en="🗑️ Clear Progress">️ مسح التقدم</button>
+</div>
+
+<header class="max-w-5xl mx-auto bg-white p-6 rounded-2xl shadow-lg mb-8 border-4 border-indigo-500">
+<div class="text-center">
+<div class="inline-block bg-indigo-700 text-white px-4 py-1 rounded-full text-xs font-bold mb-2">PHYSICS GRADE 12 ADVANCED</div>
+<h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2" data-ar="⚛️ التأثير الكهروضوئي" data-en="️ Photoelectric Effect">⚛️ التأثير الكهروضوئي</h1>
+<h2 class="text-lg text-indigo-700 font-semibold" data-ar="فيزياء 12 متقدم - Inspire" data-en="Grade 12 Advanced Physics - Inspire">فيزياء 12 متقدم - Inspire</h2>
+<p class="text-sm text-gray-600 mt-2" data-ar="الفوتونات، دالة الشغل، التردد الحرج، جهد الإيقاف، معادلة أينشتاين" data-en="Photons, Work Function, Threshold Frequency, Stopping Potential, Einstein's Equation">الفوتونات، دالة الشغل، التردد الحرج، جهد الإيقاف، معادلة أينشتاين</p>
+<p class="text-xs text-green-600 mt-2 font-semibold" data-ar="💾 يتم حفظ تقدمك تلقائياً - 28 سؤالاً في 6 أقسام" data-en="💾 Your progress is saved automatically - 28 questions in 6 sections">💾 يتم حفظ تقدمك تلقائياً - 28 سؤالاً في 6 أقسام</p>
+</div>
+<div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+<span><span data-ar="📅 التاريخ:" data-en="📅 Date:">📅 التاريخ:</span> <input type="text" id="examDate" class="border-b-2 border-indigo-300 bg-transparent w-28 text-center"></span>
+<span><span data-ar="😊 الاسم:" data-en="😊 Name:">😊 الاسم:</span> <input type="text" id="studentName" class="border-b-2 border-indigo-300 bg-transparent w-32 text-center" placeholder="اكتب اسمك"></span>
+<span><span data-ar=" الشعبة:" data-en="🏫 Class:">🏫 الشعبة:</span> <input type="text" id="studentClass" class="border-b-2 border-indigo-300 bg-transparent w-28 text-center" placeholder="الشعبة"></span>
+<span data-ar="⏰ المدة: 90 دقيقة" data-en="⏰ Duration: 90 min">⏰ المدة: 90 دقيقة</span>
+<span data-ar="📊 المجموع: 100 درجة" data-en="📊 Total: 100 pts">📊 المجموع: 100 درجة</span>
+</div>
+</header>
+
+<div class="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-md border-2 border-indigo-200 no-print">
+<h3 class="font-bold text-lg mb-3 text-indigo-800 text-center" data-ar="📐 القوانين الأساسية" data-en="📐 Key Formulae">📐 القوانين الأساسية</h3>
+<div class="grid md:grid-cols-3 gap-3 text-sm">
+<div class="formula-box"><strong>Einstein:</strong> KE_max = hf - W</div>
+<div class="formula-box"><strong>Photon Energy:</strong> E = hf = hc/λ</div>
+<div class="formula-box"><strong>Work Function:</strong> W = hf₀</div>
+<div class="formula-box"><strong>Stopping Potential:</strong> eV_s = KE_max</div>
+<div class="formula-box"><strong>KE:</strong> ½mv²</div>
+<div class="formula-box"><strong>h = 6.63×10⁻³⁴ J·s</strong></div>
+</div>
+</div>
+
+<main class="max-w-5xl mx-auto space-y-8" id="exam-content"></main>
+
+<div class="text-center no-print pb-8 mt-8">
+<button onclick="gradeExam()" class="bg-gradient-to-r from-indigo-700 to-purple-600 hover:from-indigo-800 hover:to-purple-700 text-white text-lg px-10 py-4 rounded-2xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer" data-ar=" صحح إجاباتي!" data-en=" Grade My Answers!">🎯 صحح إجاباتي!</button>
+</div>
+
+<div id="results-panel" class="max-w-5xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-4 border-indigo-500 hidden no-print">
+<h2 class="text-3xl font-bold text-gray-900 mb-6 text-center" data-ar=" نتيجتك يا بطل! 🏆" data-en="🏆 Your Results, Champion! ">🏆 نتيجتك يا بطل! 🏆</h2>
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+<div class="bg-indigo-50 p-4 rounded-xl text-center"><p data-ar="😊 الاسم" data-en="😊 Name">😊 الاسم</p><p id="res-name" class="font-bold text-xl text-indigo-700">-</p></div>
+<div class="bg-purple-50 p-4 rounded-xl text-center"><p data-ar="📅 التاريخ" data-en="📅 Date">📅 التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+<div class="bg-indigo-50 p-4 rounded-xl text-center"><p data-ar="🌟 المجموع" data-en="🌟 Score">🌟 المجموع</p><p id="res-total" class="font-bold text-3xl text-indigo-700">0 / 100</p></div>
+</div>
+<div class="text-center mb-6">
+<span id="success-badge" class="success-badge grade-excellent">-</span>
+<p id="success-percent" class="text-4xl font-bold text-indigo-700 mt-2">0%</p>
+<p class="text-sm text-gray-500" data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</p>
+</div>
+<div class="bg-gray-50 p-6 rounded-xl mb-6">
+<h3 class="font-bold text-lg mb-4 text-gray-800" data-ar="📊 أدائك في كل قسم:" data-en="📊 Your Performance:">📊 أدائك في كل قسم:</h3>
+<div class="space-y-3" id="sections-performance"></div>
+</div>
+<div class="text-center mb-6">
+<button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-indigo-700 to-purple-600 text-white text-lg px-8 py-3 rounded-2xl font-bold shadow-xl transition cursor-pointer" data-ar="📧 أرسل النتيجة للمعلم" data-en="📧 Send Results to Teacher">📧 أرسل النتيجة للمعلم</button>
+<p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+</div>
+<div class="flex gap-3 justify-center">
+<button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-xl font-semibold" data-ar="🖨️ طباعة النتيجة" data-en="🖨️ Print Results">🖨️ طباعة النتيجة</button>
+</div>
+</div>
+
+<footer class="max-w-5xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+© <span data-ar="التأثير الكهروضوئي - فيزياء 12" data-en="Photoelectric Effect - Physics 12">التأثير الكهروضوئي - فيزياء 12</span> | Mr. Mohammed Hesham ⚛️
+</footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+emailjs.init(PUBLIC_KEY);
+
+const STORAGE_KEY = 'photoelectric_effect_grade12_v1';
+const TOTAL_TIME = 5400;
+const TOTAL_QUESTIONS = 28;
+const TOTAL_SECTIONS = 6;
+
+let currentSeed = null;
+let answersVisible = false;
+let saveIndicatorTimeout = null;
+
+function mulberry32(a) {
+    return function() {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+}
+let rng = null;
+
+function showSaveIndicator() {
+    const indicator = document.getElementById('saveIndicator');
+    indicator.classList.add('show');
+    if (saveIndicatorTimeout) clearTimeout(saveIndicatorTimeout);
+    saveIndicatorTimeout = setTimeout(() => indicator.classList.remove('show'), 1500);
+}
+
+function saveState(showIndicator = true) {
+    try {
+        const state = {
+            seed: currentSeed, lang: currentLang,
+            studentName: document.getElementById('studentName').value,
+            studentClass: document.getElementById('studentClass').value,
+            examDate: document.getElementById('examDate').value,
+            answers: getSelectedAnswers(),
+            timeRemaining: timeRemaining,
+            answersVisible: answersVisible, savedAt: Date.now()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (showIndicator) showSaveIndicator();
+    } catch (e) { console.error('Save error:', e); }
+}
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch (e) { return null; }
+}
+
+function getSelectedAnswers() {
+    const answers = {};
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected) answers[i] = selected.value;
+    }
+    return answers;
+}
+
+function restoreAnswers(answers) {
+    if (!answers) return;
+    for (const [idx, val] of Object.entries(answers)) {
+        const radio = document.querySelector(`input[name="q${idx}"][value="${val}"]`);
+        if (radio) radio.checked = true;
+    }
+}
+
+function clearProgress() {
+    const msg = currentLang === 'ar' ? '️ هل أنت متأكد من مسح كل التقدم؟' : '⚠️ Clear all progress?';
+    if (confirm(msg)) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+}
+
+function setupAnswerListeners() {
+    document.getElementById('exam-content').addEventListener('change', (e) => {
+        if (e.target.type === 'radio') saveState();
+    });
+}
+
+function setupInputListeners() {
+    ['studentName', 'studentClass', 'examDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => saveState(false));
+            el.addEventListener('blur', () => saveState());
+        }
+    });
+}
+
+// ==================== SVG Diagrams ====================
+const svgGraphs = {
+    photoelectric_effect: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#eef2ff" stroke="#6366f1" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#3730a3" font-weight="bold">️ التأثير الكهروضوئي</text>
+        <rect x="20" y="180" width="360" height="40" fill="#94a3b8" stroke="#64748b" stroke-width="2"/>
+        <text x="200" y="205" text-anchor="middle" font-size="12" fill="white" font-weight="bold">Metal Surface</text>
+        <circle cx="100" cy="170" r="4" fill="#dc2626"/>
+        <circle cx="150" cy="170" r="4" fill="#dc2626"/>
+        <circle cx="200" cy="170" r="4" fill="#dc2626"/>
+        <circle cx="250" cy="170" r="4" fill="#dc2626"/>
+        <circle cx="300" cy="170" r="4" fill="#dc2626"/>
+        <text x="200" y="160" text-anchor="middle" font-size="10" fill="#dc2626">Electrons</text>
+        <path d="M 80 80 L 100 170" stroke="#fbbf24" stroke-width="3" marker-end="url(#photon)"/>
+        <path d="M 150 80 L 170 170" stroke="#fbbf24" stroke-width="3" marker-end="url(#photon)"/>
+        <path d="M 220 80 L 240 170" stroke="#fbbf24" stroke-width="3" marker-end="url(#photon)"/>
+        <path d="M 290 80 L 310 170" stroke="#fbbf24" stroke-width="3" marker-end="url(#photon)"/>
+        <text x="150" y="60" text-anchor="middle" font-size="11" fill="#f59e0b" font-weight="bold">Photons (hf)</text>
+        <path d="M 100 170 Q 80 130 60 100" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#electron)"/>
+        <path d="M 200 170 Q 200 130 200 90" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#electron)"/>
+        <path d="M 300 170 Q 320 130 340 100" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#electron)"/>
+        <text x="200" y="80" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="bold">Emitted e⁻</text>
+        <text x="200" y="240" text-anchor="middle" font-size="11" fill="#3730a3">KE_max = hf - W (Einstein's Equation)</text>
+        <defs>
+            <marker id="photon" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#fbbf24"/>
+            </marker>
+            <marker id="electron" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+            </marker>
+        </defs>
+    </svg>`,
+    
+    energy_diagram: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold"> مخطط الطاقة - Energy Diagram</text>
+        <line x1="50" y1="40" x2="50" y2="220" stroke="#374151" stroke-width="2"/>
+        <text x="20" y="130" text-anchor="middle" font-size="11" fill="#374151" transform="rotate(-90 20 130)">Energy</text>
+        <rect x="100" y="100" width="60" height="120" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+        <text x="130" y="165" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">hf</text>
+        <rect x="100" y="160" width="60" height="60" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+        <text x="130" y="195" text-anchor="middle" font-size="10" fill="white" font-weight="bold">W</text>
+        <rect x="100" y="100" width="60" height="60" fill="#10b981" stroke="#065f46" stroke-width="2"/>
+        <text x="130" y="135" text-anchor="middle" font-size="10" fill="white" font-weight="bold">KE</text>
+        <text x="130" y="240" text-anchor="middle" font-size="11" fill="#92400e">hf = W + KE_max</text>
+        <text x="280" y="100" font-size="11" fill="#92400e">Photon Energy (hf)</text>
+        <text x="280" y="130" font-size="11" fill="#065f46">KE_max (kinetic)</text>
+        <text x="280" y="160" font-size="11" fill="#991b1b">W (work function)</text>
+        <text x="280" y="190" font-size="11" fill="#92400e">Energy Conservation</text>
+        <text x="280" y="220" font-size="11" fill="#92400e">hf ≥ W for emission</text>
+    </svg>`,
+    
+    stopping_potential: `<svg class="svg-graph" width="400" height="260" viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="250" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">⚡ جهد الإيقاف - Stopping Potential</text>
+        <rect x="50" y="80" width="80" height="100" fill="#94a3b8" stroke="#64748b" stroke-width="2"/>
+        <text x="90" y="135" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Cathode</text>
+        <rect x="270" y="80" width="80" height="100" fill="#94a3b8" stroke="#64748b" stroke-width="2"/>
+        <text x="310" y="135" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Anode</text>
+        <line x1="130" y1="130" x2="270" y2="130" stroke="#374151" stroke-width="2" stroke-dasharray="4"/>
+        <circle cx="180" cy="130" r="4" fill="#dc2626"/>
+        <circle cx="200" cy="130" r="4" fill="#dc2626"/>
+        <circle cx="220" cy="130" r="4" fill="#dc2626"/>
+        <circle cx="240" cy="130" r="4" fill="#dc2626"/>
+        <text x="200" y="115" text-anchor="middle" font-size="10" fill="#dc2626">e⁻ flow</text>
+        <path d="M 90 180 L 90 210 L 310 210 L 310 180" fill="none" stroke="#2563eb" stroke-width="2"/>
+        <text x="200" y="230" text-anchor="middle" font-size="11" fill="#2563eb" font-weight="bold">Battery (V_s)</text>
+        <text x="200" y="250" text-anchor="middle" font-size="11" fill="#9f1239">eV_s = KE_max = hf - W</text>
+    </svg>`,
+    
+    ke_vs_frequency: `<svg class="svg-graph" width="400" height="280" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="270" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#065f46" font-weight="bold">📈 KE_max vs Frequency</text>
+        <line x1="50" y1="240" x2="370" y2="240" stroke="#374151" stroke-width="2"/>
+        <line x1="50" y1="40" x2="50" y2="260" stroke="#374151" stroke-width="2"/>
+        <text x="375" y="235" font-size="11" fill="#374151">f</text>
+        <text x="20" y="140" text-anchor="middle" font-size="11" fill="#374151" transform="rotate(-90 20 140)">KE_max</text>
+        <text x="150" y="255" text-anchor="middle" font-size="10" fill="#374151">f₀</text>
+        <line x1="150" y1="240" x2="350" y2="80" stroke="#10b981" stroke-width="3"/>
+        <circle cx="150" cy="240" r="5" fill="#dc2626"/>
+        <text x="150" y="230" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="bold">Threshold</text>
+        <line x1="50" y1="200" x2="150" y2="200" stroke="#dc2626" stroke-width="2" stroke-dasharray="4"/>
+        <text x="100" y="215" text-anchor="middle" font-size="9" fill="#dc2626">No emission</text>
+        <text x="250" y="140" text-anchor="middle" font-size="10" fill="#10b981" font-weight="bold">Slope = h</text>
+        <text x="100" y="210" text-anchor="middle" font-size="9" fill="#dc2626">y-intercept = -W</text>
+        <text x="200" y="265" text-anchor="middle" font-size="11" fill="#065f46">KE_max = hf - W (linear relationship)</text>
+    </svg>`,
+    
+    ke_vs_inverse_lambda: `<svg class="svg-graph" width="400" height="280" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="270" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#5b21b6" font-weight="bold">📈 KE vs 1/λ Graph</text>
+        <line x1="50" y1="240" x2="370" y2="240" stroke="#374151" stroke-width="2"/>
+        <line x1="50" y1="40" x2="50" y2="260" stroke="#374151" stroke-width="2"/>
+        <text x="375" y="235" font-size="11" fill="#374151">1/λ</text>
+        <text x="20" y="140" text-anchor="middle" font-size="11" fill="#374151" transform="rotate(-90 20 140)">KE_max</text>
+        <text x="130" y="255" text-anchor="middle" font-size="10" fill="#374151">1/λ₀</text>
+        <line x1="130" y1="240" x2="350" y2="80" stroke="#7c3aed" stroke-width="3"/>
+        <circle cx="130" cy="240" r="5" fill="#dc2626"/>
+        <text x="130" y="230" text-anchor="middle" font-size="9" fill="#dc2626">Threshold</text>
+        <text x="250" y="140" text-anchor="middle" font-size="10" fill="#7c3aed" font-weight="bold">Slope = hc</text>
+        <text x="200" y="265" text-anchor="middle" font-size="11" fill="#5b21b6">KE = hc(1/λ) - W</text>
+        <text x="200" y="275" text-anchor="middle" font-size="10" fill="#5b21b6">Slope = hc (Planck × speed of light)</text>
+    </svg>`,
+    
+    electron_speed: `<svg class="svg-graph" width="400" height="240" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="390" height="230" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+        <text x="200" y="25" text-anchor="middle" font-size="14" fill="#991b1b" font-weight="bold">⚡ حساب سرعة الإلكترون</text>
+        <text x="200" y="55" text-anchor="middle" font-size="13" fill="#991b1b" font-family="'Amiri', serif">KE = ½mv²</text>
+        <text x="200" y="85" text-anchor="middle" font-size="13" fill="#991b1b" font-family="'Amiri', serif">v = √(2KE/m)</text>
+        <rect x="30" y="110" width="340" height="50" rx="6" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+        <text x="200" y="130" text-anchor="middle" font-size="11" fill="#991b1b">m_electron = 9.11 × 10⁻³¹ kg</text>
+        <text x="200" y="150" text-anchor="middle" font-size="11" fill="#991b1b">e = 1.6 × 10⁻¹⁹ C</text>
+        <rect x="30" y="170" width="340" height="50" rx="6" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+        <text x="200" y="190" text-anchor="middle" font-size="11" fill="#991b1b">1 eV = 1.6 × 10⁻¹⁹ J</text>
+        <text x="200" y="210" text-anchor="middle" font-size="11" fill="#991b1b">KE(eV) × 1.6×10⁻¹⁹ = KE(J)</text>
+    </svg>`
+};
+
+// ==================== EXAM DATA - 28 QUESTIONS ====================
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 القسم 1: مفاهيم التأثير الكهروضوئي (Q1-Q5)', en: '🔹 Section 1: Photoelectric Concepts (Q1-Q5)' },
+            questions: [
+                {
+                    q: { ar: 'انبعاث الإلكترونات من سطح فلز عند إضاءته بضوء معين يعتمد على:', en: 'Emission of electrons from metal surface depends on:' },
+                    svg: svgGraphs.photoelectric_effect,
+                    options: [
+                        { ar: 'الطول الموجي للضوء', en: 'Wavelength of light' },
+                        { ar: 'زاوية السقوط', en: 'Angle of incidence' },
+                        { ar: 'شدة الضوء فقط', en: 'Light intensity only' },
+                        { ar: 'سرعة الضوء', en: 'Speed of light' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'يعتمد على الطول الموجي (التردد). يجب أن يكون λ < λ₀ (الطول الموجي الحرج)', en: 'Depends on wavelength (frequency). Must have λ < λ₀ (threshold wavelength)' }
+                },
+                {
+                    q: { ar: 'ما هي دالة الشغل (Work Function) للفلز؟', en: 'What is the Work Function of a metal?' },
+                    options: [
+                        { ar: 'الطاقة اللازمة لتحرير الإلكترون الأضعف ارتباطاً', en: 'Energy needed to free the most weakly bound electron' },
+                        { ar: 'الطاقة الحركية للإلكترون المنبعث', en: 'Kinetic energy of emitted electron' },
+                        { ar: 'طاقة الفوتون الساقط', en: 'Energy of incident photon' },
+                        { ar: 'جهد الإيقاف', en: 'Stopping potential' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'دالة الشغل W هي أقل طاقة لازمة لتحرير إلكترون من سطح الفلز', en: 'Work function W is minimum energy to free electron from metal surface' }
+                },
+                {
+                    q: { ar: 'كيف يرتبط التردد الحرج (f₀) بالتأثير الكهروضوئي؟', en: 'How is threshold frequency (f₀) related to photoelectric effect?' },
+                    options: [
+                        { ar: 'الحد الأدنى لتردد الإشعاع اللازم لتحرير الإلكترونات', en: 'Minimum frequency of radiation needed to eject electrons' },
+                        { ar: 'الحد الأقصى للتردد', en: 'Maximum frequency' },
+                        { ar: 'التردد الذي عنده تكون الطاقة الحركية أعظمية', en: 'Frequency where KE is maximum' },
+                        { ar: 'تردد الضوء المرئي', en: 'Frequency of visible light' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'التردد الحرج f₀ هو أقل تردد يمتلك طاقة hf₀ ≥ W لتحرير الإلكترون', en: 'Threshold frequency f₀ is minimum frequency with energy hf₀ ≥ W to eject electron' }
+                },
+                {
+                    q: { ar: 'ماذا يحدث عند زيادة تردد الضوء الساقط (مع ثبات الشدة)؟', en: 'What happens when frequency of incident light increases (constant intensity)?' },
+                    options: [
+                        { ar: 'الطاقة الحركية تزداد، عدد الفوتونات لا يتغير', en: 'KE increases, number of photons unchanged' },
+                        { ar: 'الطاقة الحركية تقل', en: 'KE decreases' },
+                        { ar: 'عدد الإلكترونات يزداد', en: 'Number of electrons increases' },
+                        { ar: 'لا شيء يتغير', en: 'Nothing changes' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE_max = hf - W، بزيادة f تزداد KE. عدد الفوتونات ثابت لأن الشدة ثابتة', en: 'KE_max = hf - W, increasing f increases KE. Photon number constant (constant intensity)' }
+                },
+                {
+                    q: { ar: 'ماذا يحدث عند زيادة شدة الضوء (مع ثبات التردد)؟', en: 'What happens when light intensity increases (constant frequency)?' },
+                    options: [
+                        { ar: 'عدد الإلكترونات يزداد، الطاقة الحركية لا تتغير', en: 'Number of electrons increases, KE unchanged' },
+                        { ar: 'الطاقة الحركية تزداد', en: 'KE increases' },
+                        { ar: 'التردد الحرج يتغير', en: 'Threshold frequency changes' },
+                        { ar: 'دالة الشغل تقل', en: 'Work function decreases' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'زيادة الشدة = زيادة عدد الفوتونات = زيادة عدد الإلكترونات. KE تعتمد على التردد فقط', en: 'Higher intensity = more photons = more electrons. KE depends only on frequency' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 القسم 2: حسابات جهد الإيقاف (Q6-Q10)', en: '🔹 Section 2: Stopping Potential Calculations (Q6-Q10)' },
+            questions: [
+                {
+                    q: { ar: 'جهد الإيقاف لخلية ضوئية هو 4.0 V. ما الطاقة الحركية بالإلكترون فولت؟', en: 'Stopping potential is 4.0 V. What is KE in eV?' },
+                    svg: svgGraphs.stopping_potential,
+                    options: [
+                        { ar: '<span class="math-display">4.0 eV</span>', en: '<span class="math-display">4.0 eV</span>' },
+                        { ar: '<span class="math-display">2.0 eV</span>', en: '<span class="math-display">2.0 eV</span>' },
+                        { ar: '<span class="math-display">8.0 eV</span>', en: '<span class="math-display">8.0 eV</span>' },
+                        { ar: '<span class="math-display">1.0 eV</span>', en: '<span class="math-display">1.0 eV</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE = eV_s = 4.0 eV (الطاقة الحركية تساوي عددياً جهد الإيقاف)', en: 'KE = eV_s = 4.0 eV (KE numerically equals stopping potential)' }
+                },
+                {
+                    q: { ar: 'نفس السؤال السابق: ما الطاقة الحركية بالجول؟', en: 'Same question: What is KE in Joules?' },
+                    options: [
+                        { ar: '<span class="math-display">6.4 × 10⁻¹⁹ J</span>', en: '<span class="math-display">6.4 × 10⁻¹⁹ J</span>' },
+                        { ar: '<span class="math-display">4.0 × 10⁻¹⁹ J</span>', en: '<span class="math-display">4.0 × 10⁻¹⁹ J</span>' },
+                        { ar: '<span class="math-display">6.4 × 10⁻¹⁸ J</span>', en: '<span class="math-display">6.4 × 10⁻¹⁸ J</span>' },
+                        { ar: '<span class="math-display">2.4 × 10⁻¹⁹ J</span>', en: '<span class="math-display">2.4 × 10¹⁹ J</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE = 4.0 × 1.6×10⁻¹⁹ = 6.4×10⁻¹⁹ J', en: 'KE = 4.0 × 1.6×10⁻¹⁹ = 6.4×10⁻¹⁹ J' }
+                },
+                {
+                    q: { ar: 'أقصى طاقة حركية للإلكترونات 7.5×10¹⁹ J. ما جهد الإيقاف؟', en: 'Max KE of electrons is 7.5×10⁻¹⁹ J. What is stopping potential?' },
+                    options: [
+                        { ar: '<span class="math-display">≈ 4.7 V</span>', en: '<span class="math-display">≈ 4.7 V</span>' },
+                        { ar: '<span class="math-display">7.5 V</span>', en: '<span class="math-display">7.5 V</span>' },
+                        { ar: '<span class="math-display">2.5 V</span>', en: '<span class="math-display">2.5 V</span>' },
+                        { ar: '<span class="math-display">1.6 V</span>', en: '<span class="math-display">1.6 V</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'V_s = KE/e = 7.5×10⁻¹⁹ / 1.6×10⁻¹⁹ = 4.6875 ≈ 4.7 V', en: 'V_s = KE/e = 7.5×10⁻¹⁹ / 1.6×10⁻¹⁹ = 4.6875 ≈ 4.7 V' }
+                },
+                {
+                    q: { ar: 'إذا كان جهد الإيقاف 2.5 V، فما الطاقة الحركية بالجول؟', en: 'If stopping potential is 2.5 V, what is KE in Joules?' },
+                    options: [
+                        { ar: '<span class="math-display">4.0 × 10⁻¹⁹ J</span>', en: '<span class="math-display">4.0 × 10⁻¹⁹ J</span>' },
+                        { ar: '<span class="math-display">2.5 × 10⁻¹ J</span>', en: '<span class="math-display">2.5 × 10⁻¹⁹ J</span>' },
+                        { ar: '<span class="math-display">1.6 × 10⁻¹⁹ J</span>', en: '<span class="math-display">1.6 × 10⁻¹⁹ J</span>' },
+                        { ar: '<span class="math-display">4.0 × 10⁻²⁰ J</span>', en: '<span class="math-display">4.0 × 10⁻²⁰ J</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE = eV_s = 1.6×10⁻¹⁹ × 2.5 = 4.0×10⁻¹⁹ J', en: 'KE = eV_s = 1.6×10⁻¹ × 2.5 = 4.0×10⁻¹⁹ J' }
+                },
+                {
+                    q: { ar: 'ما العلاقة بين جهد الإيقاف والطاقة الحركية القصوى؟', en: 'What is the relationship between stopping potential and max KE?' },
+                    options: [
+                        { ar: '<span class="math-display">eV_s = KE_max</span>', en: '<span class="math-display">eV_s = KE_max</span>' },
+                        { ar: '<span class="math-display">V_s = KE_max</span>', en: '<span class="math-display">V_s = KE_max</span>' },
+                        { ar: '<span class="math-display">eV_s = ½KE_max</span>', en: '<span class="math-display">eV_s = ½KE_max</span>' },
+                        { ar: '<span class="math-display">V_s = 2KE_max</span>', en: '<span class="math-display">V_s = 2KE_max</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'eV_s = KE_max، حيث e شحنة الإلكترون', en: 'eV_s = KE_max, where e is electron charge' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 القسم 3: حسابات الطاقة والسرعة (Q11-Q15)', en: '🔹 Section 3: Energy & Speed Calculations (Q11-Q15)' },
+            questions: [
+                {
+                    q: { ar: 'إلكترون طاقته 2.3 eV. ما طاقته بالجول؟', en: 'Electron energy 2.3 eV. What is energy in Joules?' },
+                    svg: svgGraphs.electron_speed,
+                    options: [
+                        { ar: '<span class="math-display">3.68 × 10⁻¹⁹ J</span>', en: '<span class="math-display">3.68 × 10⁻¹ J</span>' },
+                        { ar: '<span class="math-display">2.3 × 10⁻¹⁹ J</span>', en: '<span class="math-display">2.3 × 10⁻¹⁹ J</span>' },
+                        { ar: '<span class="math-display">1.6 × 10⁻¹⁹ J</span>', en: '<span class="math-display">1.6 × 10¹⁹ J</span>' },
+                        { ar: '<span class="math-display">3.68 × 10⁻¹⁸ J</span>', en: '<span class="math-display">3.68 × 10⁻¹⁸ J</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '2.3 × 1.6×10⁻¹⁹ = 3.68×10⁻¹⁹ J', en: '2.3 × 1.6×10⁻¹⁹ = 3.68×10⁻¹⁹ J' }
+                },
+                {
+                    q: { ar: 'ما سرعة الإلكترون الذي طاقته 3.68×10⁻¹⁹ J؟ (m = 9.11×10⁻³¹ kg)', en: 'What is speed of electron with energy 3.68×10⁻¹⁹ J? (m = 9.11×10⁻³¹ kg)' },
+                    options: [
+                        { ar: '<span class="math-display">≈ 9 × 10⁵ m/s</span>', en: '<span class="math-display">≈ 9 × 10⁵ m/s</span>' },
+                        { ar: '<span class="math-display">≈ 3 × 10⁸ m/s</span>', en: '<span class="math-display">≈ 3 × 10 m/s</span>' },
+                        { ar: '<span class="math-display">≈ 1 × 10⁶ m/s</span>', en: '<span class="math-display">≈ 1 × 10⁶ m/s</span>' },
+                        { ar: '<span class="math-display">≈ 5 × 10 m/s</span>', en: '<span class="math-display">≈ 5 × 10 m/s</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'v = √(2KE/m) = (2×3.68×10¹⁹/9.11×10⁻³¹) ≈ 9×10 m/s', en: 'v = √(2KE/m) = √(2×3.68×10⁻¹⁹/9.11×10⁻³¹) ≈ 9×10⁵ m/s' }
+                },
+                {
+                    q: { ar: 'طاقة فوتون 8 eV تعطي إلكترونات بطاقة 6 eV. ما دالة الشغل؟', en: 'Photon energy 8 eV gives electrons with 6 eV. What is work function?' },
+                    options: [
+                        { ar: '<span class="math-display">2 eV</span>', en: '<span class="math-display">2 eV</span>' },
+                        { ar: '<span class="math-display">6 eV</span>', en: '<span class="math-display">6 eV</span>' },
+                        { ar: '<span class="math-display">8 eV</span>', en: '<span class="math-display">8 eV</span>' },
+                        { ar: '<span class="math-display">14 eV</span>', en: '<span class="math-display">14 eV</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'W = E_photon - KE = 8 - 6 = 2 eV', en: 'W = E_photon - KE = 8 - 6 = 2 eV' }
+                },
+                {
+                    q: { ar: 'نفس الفلز (W = 2 eV). إذا سقط ضوء طاقته 6 eV، فما KE؟', en: 'Same metal (W = 2 eV). If light energy is 6 eV, what is KE?' },
+                    options: [
+                        { ar: '<span class="math-display">4 eV</span>', en: '<span class="math-display">4 eV</span>' },
+                        { ar: '<span class="math-display">6 eV</span>', en: '<span class="math-display">6 eV</span>' },
+                        { ar: '<span class="math-display">2 eV</span>', en: '<span class="math-display">2 eV</span>' },
+                        { ar: '<span class="math-display">8 eV</span>', en: '<span class="math-display">8 eV</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE = E - W = 6 - 2 = 4 eV', en: 'KE = E - W = 6 - 2 = 4 eV' }
+                },
+                {
+                    q: { ar: 'فلز دالة شغله 3 eV. ما أقل طاقة فوتون لتحرير إلكترون؟', en: 'Metal work function 3 eV. Minimum photon energy to eject electron?' },
+                    options: [
+                        { ar: '<span class="math-display">3 eV</span>', en: '<span class="math-display">3 eV</span>' },
+                        { ar: '<span class="math-display">1 eV</span>', en: '<span class="math-display">1 eV</span>' },
+                        { ar: '<span class="math-display">6 eV</span>', en: '<span class="math-display">6 eV</span>' },
+                        { ar: '<span class="math-display">0 eV</span>', en: '<span class="math-display">0 eV</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'أقل طاقة = دالة الشغل = 3 eV (عند التردد الحرج)', en: 'Minimum energy = work function = 3 eV (at threshold frequency)' }
+                },
+                {
+                    q: { ar: 'فوتون طاقته 5 eV سقط على فلز دالة شغله 3 eV. ما KE الإلكترون؟', en: 'Photon energy 5 eV hits metal with work function 3 eV. KE of electron?' },
+                    options: [
+                        { ar: '<span class="math-display">2 eV</span>', en: '<span class="math-display">2 eV</span>' },
+                        { ar: '<span class="math-display">5 eV</span>', en: '<span class="math-display">5 eV</span>' },
+                        { ar: '<span class="math-display">3 eV</span>', en: '<span class="math-display">3 eV</span>' },
+                        { ar: '<span class="math-display">8 eV</span>', en: '<span class="math-display">8 eV</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE = hf - W = 5 - 3 = 2 eV', en: 'KE = hf - W = 5 - 3 = 2 eV' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 القسم 4: معادلة أينشتاين والرسوم البيانية (Q16-Q21)', en: '🔹 Section 4: Einstein Equation & Graphs (Q16-Q21)' },
+            questions: [
+                {
+                    q: { ar: 'ما معادلة أينشتاين للتأثير الكهروضوئي؟', en: 'What is Einstein\'s photoelectric equation?' },
+                    svg: svgGraphs.energy_diagram,
+                    options: [
+                        { ar: '<span class="math-display">KE_max = hf - W</span>', en: '<span class="math-display">KE_max = hf - W</span>' },
+                        { ar: '<span class="math-display">KE = hf + W</span>', en: '<span class="math-display">KE = hf + W</span>' },
+                        { ar: '<span class="math-display">E = mc²</span>', en: '<span class="math-display">E = mc²</span>' },
+                        { ar: '<span class="math-display">KE = W - hf</span>', en: '<span class="math-display">KE = W - hf</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE_max = hf - W (طاقة الفوتون = دالة الشغل + الطاقة الحركية)', en: 'KE_max = hf - W (photon energy = work function + kinetic energy)' }
+                },
+                {
+                    q: { ar: 'في الرسم البياني KE vs f، ما الميل؟', en: 'In KE vs f graph, what is the slope?' },
+                    svg: svgGraphs.ke_vs_frequency,
+                    options: [
+                        { ar: 'ثابت بلانك h', en: 'Planck\'s constant h' },
+                        { ar: 'دالة الشغل W', en: 'Work function W' },
+                        { ar: 'سرعة الضوء c', en: 'Speed of light c' },
+                        { ar: 'شحنة الإلكترون e' },
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE = hf - W، الميل = h (ثابت بلانك)', en: 'KE = hf - W, slope = h (Planck\'s constant)' }
+                },
+                {
+                    q: { ar: 'في الرسم البياني KE vs 1/λ، ما الميل؟', en: 'In KE vs 1/λ graph, what is the slope?' },
+                    svg: svgGraphs.ke_vs_inverse_lambda,
+                    options: [
+                        { ar: '<span class="math-display">hc</span> (ثابت بلانك × سرعة الضوء)', en: '<span class="math-display">hc</span> (Planck × speed of light)' },
+                        { ar: '<span class="math-display">h</span> فقط', en: '<span class="math-display">h</span> only' },
+                        { ar: '<span class="math-display">c</span> فقط', en: '<span class="math-display">c</span> only' },
+                        { ar: '<span class="math-display">W</span>', en: '<span class="math-display">W</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE = hc(1/λ) - W، الميل = hc', en: 'KE = hc(1/λ) - W, slope = hc' }
+                },
+                {
+                    q: { ar: 'ما المقطع الصادي (y-intercept) في رسم KE vs f؟', en: 'What is y-intercept in KE vs f graph?' },
+                    options: [
+                        { ar: '<span class="math-display">-W</span> (سالب دالة الشغل)', en: '<span class="math-display">-W</span> (negative work function)' },
+                        { ar: '<span class="math-display">+W</span>', en: '<span class="math-display">+W</span>' },
+                        { ar: '<span class="math-display">h</span>', en: '<span class="math-display">h</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عند f=0: KE = -W، إذن المقطع الصادي = -W', en: 'At f=0: KE = -W, so y-intercept = -W' }
+                },
+                {
+                    q: { ar: 'عند التردد الحرج f₀، ما قيمة KE_max؟', en: 'At threshold frequency f₀, what is KE_max?' },
+                    options: [
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">hf₀</span>', en: '<span class="math-display">hf₀</span>' },
+                        { ar: '<span class="math-display">W</span>', en: '<span class="math-display">W</span>' },
+                        { ar: '<span class="math-display">2W</span>', en: '<span class="math-display">2W</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عند f = f₀: KE = hf₀ - W = W - W = 0', en: 'At f = f₀: KE = hf₀ - W = W - W = 0' }
+                },
+                {
+                    q: { ar: 'ما العلاقة بين التردد الحرج f₀ ودالة الشغل W؟', en: 'What is the relationship between threshold frequency f₀ and work function W?' },
+                    options: [
+                        { ar: '<span class="math-display">W = hf₀</span>', en: '<span class="math-display">W = hf₀</span>' },
+                        { ar: '<span class="math-display">W = f₀/h</span>', en: '<span class="math-display">W = f₀/h</span>' },
+                        { ar: '<span class="math-display">f₀ = W/h²</span>', en: '<span class="math-display">f₀ = W/h²</span>' },
+                        { ar: '<span class="math-display">W = hf₀²</span>', en: '<span class="math-display">W = hf₀²</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'W = hf₀ (دالة الشغل = ثابت بلانك × التردد الحرج)', en: 'W = hf₀ (work function = Planck constant × threshold frequency)' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 القسم 5: تطبيقات البوتاسيوم (Q22-Q25)', en: '🔹 Section 5: Potassium Applications (Q22-Q25)' },
+            questions: [
+                {
+                    q: { ar: 'عند سقوط ضوء على البوتاسيوم، عدد الإلكترونات المنبعثة يتناسب طردياً مع:', en: 'When light falls on potassium, number of emitted electrons is proportional to:' },
+                    options: [
+                        { ar: 'شدة الضوء الساقط', en: 'Intensity of incident light' },
+                        { ar: 'تردد الضوء', en: 'Frequency of light' },
+                        { ar: 'الطول الموجي', en: 'Wavelength' },
+                        { ar: 'جهد الإيقاف', en: 'Stopping potential' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'عدد الإلكترونات يتناسب مع شدة الضوء (عدد الفوتونات)', en: 'Number of electrons proportional to light intensity (number of photons)' }
+                },
+                {
+                    q: { ar: 'البوتاسيوم له تردد حرج f₀. إذا سقط ضوء بتردد 2f₀، فما KE؟', en: 'Potassium has threshold frequency f₀. If light with frequency 2f₀ falls, what is KE?' },
+                    options: [
+                        { ar: '<span class="math-display">hf₀</span> (تساوي دالة الشغل)', en: '<span class="math-display">hf₀</span> (equals work function)' },
+                        { ar: '<span class="math-display">2hf₀</span>', en: '<span class="math-display">2hf₀</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">hf₀/2</span>', en: '<span class="math-display">hf₀/2</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE = h(2f₀) - hf₀ = hf₀ = W', en: 'KE = h(2f₀) - hf₀ = hf₀ = W' }
+                },
+                {
+                    q: { ar: 'طاقة فوتون 10 eV سقط على بوتاسيوم (W = 2.3 eV). ما KE؟', en: 'Photon energy 10 eV falls on potassium (W = 2.3 eV). What is KE?' },
+                    options: [
+                        { ar: '<span class="math-display">7.7 eV</span>', en: '<span class="math-display">7.7 eV</span>' },
+                        { ar: '<span class="math-display">10 eV</span>', en: '<span class="math-display">10 eV</span>' },
+                        { ar: '<span class="math-display">2.3 eV</span>', en: '<span class="math-display">2.3 eV</span>' },
+                        { ar: '<span class="math-display">12.3 eV</span>', en: '<span class="math-display">12.3 eV</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'KE = 10 - 2.3 = 7.7 eV', en: 'KE = 10 - 2.3 = 7.7 eV' }
+                },
+                {
+                    q: { ar: 'إذا ضاعفنا شدة الضوء على البوتاسيوم (مع ثبات التردد)، ماذا يحدث؟', en: 'If we double light intensity on potassium (constant frequency), what happens?' },
+                    options: [
+                        { ar: 'يتضاعف عدد الإلكترونات، KE لا تتغير', en: 'Number of electrons doubles, KE unchanged' },
+                        { ar: 'KE تتضاعف', en: 'KE doubles' },
+                        { ar: 'التردد الحرج يتغير', en: 'Threshold frequency changes' },
+                        { ar: 'لا شيء يتغير', en: 'Nothing changes' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'مضاعفة الشدة = مضاعفة الفوتونات = مضاعفة الإلكترونات. KE تعتمد على التردد فقط', en: 'Double intensity = double photons = double electrons. KE depends only on frequency' }
+                }
+            ]
+        },
+        {
+            id: 'sec6',
+            title: { ar: '🔹 القسم 6: مسائل متقدمة (Q26-Q28)', en: '🔹 Section 6: Advanced Problems (Q26-Q28)' },
+            questions: [
+                {
+                    q: { ar: 'فلز له تردد حرج 6×10¹⁴ Hz. ما دالة الشغل بالجول؟ (h = 6.63×10⁻³⁴)', en: 'Metal has threshold frequency 6×10¹⁴ Hz. Work function in Joules? (h = 6.63×10⁻³⁴)' },
+                    options: [
+                        { ar: '<span class="math-display">3.98 × 10⁻¹⁹ J</span>', en: '<span class="math-display">3.98 × 10⁻¹⁹ J</span>' },
+                        { ar: '<span class="math-display">6.63 × 10⁻¹⁹ J</span>', en: '<span class="math-display">6.63 × 10⁻¹⁹ J</span>' },
+                        { ar: '<span class="math-display">2.5 × 10⁻¹⁹ J</span>', en: '<span class="math-display">2.5 × 10⁻¹⁹ J</span>' },
+                        { ar: '<span class="math-display">1.0 × 10⁻¹⁹ J</span>', en: '<span class="math-display">1.0 × 10⁻¹⁹ J</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'W = hf₀ = 6.63×10⁻³⁴ × 6×10¹⁴ = 3.978×10⁻¹⁹ ≈ 3.98×10⁻¹⁹ J', en: 'W = hf₀ = 6.63×10⁻³⁴ × 6×10¹⁴ = 3.978×10⁻¹⁹ ≈ 3.98×10⁻¹⁹ J' }
+                },
+                {
+                    q: { ar: 'نفس الفلز السابق، سقط ضوء طاقته 5 eV. ما KE بالإلكترون فولت؟', en: 'Same metal, light energy 5 eV. What is KE in eV?' },
+                    options: [
+                        { ar: '<span class="math-display">≈ 2.52 eV</span>', en: '<span class="math-display">≈ 2.52 eV</span>' },
+                        { ar: '<span class="math-display">5 eV</span>', en: '<span class="math-display">5 eV</span>' },
+                        { ar: '<span class="math-display">3.98 eV</span>', en: '<span class="math-display">3.98 eV</span>' },
+                        { ar: '<span class="math-display">1.02 eV</span>', en: '<span class="math-display">1.02 eV</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'W = 3.98×10⁻¹⁹ J = 2.48 eV. KE = 5 - 2.48 ≈ 2.52 eV', en: 'W = 3.98×10⁻¹⁹ J = 2.48 eV. KE = 5 - 2.48 ≈ 2.52 eV' }
+                },
+                {
+                    q: { ar: 'ضوء طوله الموجي 400 nm سقط على فلز. ما طاقة الفوتون؟ (hc = 1240 eV·nm)', en: 'Light wavelength 400 nm falls on metal. Photon energy? (hc = 1240 eV·nm)' },
+                    options: [
+                        { ar: '<span class="math-display">3.1 eV</span>', en: '<span class="math-display">3.1 eV</span>' },
+                        { ar: '<span class="math-display">4.0 eV</span>', en: '<span class="math-display">4.0 eV</span>' },
+                        { ar: '<span class="math-display">2.5 eV</span>', en: '<span class="math-display">2.5 eV</span>' },
+                        { ar: '<span class="math-display">6.2 eV</span>', en: '<span class="math-display">6.2 eV</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'E = hc/λ = 1240/400 = 3.1 eV', en: 'E = hc/λ = 1240/400 = 3.1 eV' }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+let examData;
+let correctAnswersMap = {};
+let currentLang = 'ar';
+let timeRemaining = TOTAL_TIME;
+let timerInterval;
+
+function prepareShuffledExam() {
+    rng = mulberry32(currentSeed);
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({ option: opt, isCorrect: idx === q.correct }));
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            q.correct = shuffledOptions.findIndex(o => o.isCorrect);
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + q.correct);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    const msg = currentLang === 'ar' ? '🔄 سيتم إنشاء أسئلة جديدة ومسح إجاباتك الحالية. هل أنت متأكد؟' : '🔄 New questions will be generated and current answers cleared. Are you sure?';
+    if (confirm(msg)) {
+        currentSeed = Date.now(); timeRemaining = TOTAL_TIME; answersVisible = false;
+        prepareShuffledExam(); renderExam(); saveState();
+        alert(currentLang === 'ar' ? '🎲 تم تغيير الأسئلة! حظاً موفقاً! 🍀' : '🎲 Questions changed! Good luck! 🍀');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.body.classList.toggle('en-mode', lang === 'en');
+    document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+        el.innerHTML = lang === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    });
+    renderExam(); saveState(false);
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = { ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة:' }, en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Answer:' } };
+    const lbl = labels[currentLang]; const isRTL = currentLang === 'ar';
+    let html = ''; let globalIdx = 0;
+    examData.sections.forEach((section, secIdx) => {
+        const badgeClass = ['module-1', 'module-2', 'module-3', 'module-4', 'module-5', 'module-6'][secIdx];
+        html += `<section class="bg-white p-6 rounded-2xl shadow-lg border-2 border-indigo-100">
+            <div class="text-center mb-4"><span class="module-badge ${badgeClass}">${section.title[currentLang]}</span></div>
+            <ol class="space-y-4 text-sm">`;
+        section.questions.forEach((q) => {
+            const bs = isRTL ? 'border-r-4 pr-4' : 'border-l-4 pl-4';
+            html += `<li class="${bs} border-indigo-400 py-2" id="q-${globalIdx}">
+                <strong class="text-indigo-700">${globalIdx + 1}.</strong> <span class="arabic-math">${q.q[currentLang]}</span><br>`;
+            if (q.svg) html += `<div class="graph-container">${q.svg}</div>`;
+            q.options.forEach((opt, oIdx) => {
+                const rs = isRTL ? 'mr-4 ml-2' : 'ml-4 mr-2';
+                html += `<label class="cursor-pointer block mt-2 ${isRTL ? 'mr-4' : 'ml-4'} hover:bg-indigo-50 rounded-lg p-2 transition">
+                    <input type="radio" name="q${globalIdx}" value="${String.fromCharCode(97 + oIdx)}" class="${rs}">
+                    <span class="arabic-math">${lbl.option[oIdx]}) ${opt[currentLang]}</span>
+                </label>`;
+            });
+            html += `<div class="answer-box text-green-700 mt-3 font-medium ${answersVisible ? '' : 'hidden'} bg-green-50 rounded-lg p-3 border border-green-200">
+                ${lbl.answer} ${lbl.option[q.correct]}) <span class="arabic-math">${q.options[q.correct][currentLang]}</span><br>
+                <span class="text-sm text-green-700 mt-2 block arabic-math">${q.answer[currentLang]}</span>
+            </div></li>`;
+            globalIdx++;
+        });
+        html += `</ol></section>`;
+    });
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeRemaining--; updateTimerDisplay();
+        if (timeRemaining % 60 === 0) saveState(false);
+        if (timeRemaining <= 600) document.getElementById('timer').classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "⏰ انتهى الوقت!" : "⏰ Time's up!");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const m = Math.floor(timeRemaining / 60); const s = timeRemaining % 60;
+    document.getElementById('timer').textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+
+function toggleAnswers() {
+    answersVisible = !answersVisible;
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden', !answersVisible));
+    saveState(false);
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    const sectionScores = new Array(TOTAL_SECTIONS).fill(0);
+    const sectionCounts = [5, 5, 6, 6, 4, 3];
+    let qIdx = 0;
+    examData.sections.forEach((section, secIdx) => {
+        section.questions.forEach(() => {
+            const sel = document.querySelector(`input[name="q${qIdx}"]:checked`);
+            const li = document.getElementById(`q-${qIdx}`);
+            if (li) {
+                const isCorrect = sel && sel.value === correctAnswersMap[qIdx];
+                if (isCorrect) { correctCount++; li.classList.add('correct'); li.classList.remove('incorrect'); sectionScores[secIdx]++; }
+                else { li.classList.add('incorrect'); li.classList.remove('correct'); }
+            }
+            qIdx++;
+        });
+    });
+    const score = Math.round((correctCount / TOTAL_QUESTIONS) * 100);
+    document.getElementById('res-total').textContent = `${score} / 100`;
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'بطل' : 'Champion');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    const pc = document.getElementById('sections-performance'); pc.innerHTML = '';
+    examData.sections.forEach((s, idx) => {
+        pc.innerHTML += `<div class="flex justify-between items-center p-3 bg-white rounded-lg"><span class="text-gray-700">${s.title[currentLang]}</span><span class="font-bold text-indigo-700">${sectionScores[idx]}/${s.questions.length}</span></div>`;
+    });
+    const badge = document.getElementById('success-badge');
+    document.getElementById('success-percent').textContent = `${score}%`;
+    if (currentLang === 'ar') {
+        if (score >= 90) { badge.textContent = '🌟 ممتاز جداً!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = ' ممتاز!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 حاول مرة أخرى'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (score >= 90) { badge.textContent = '🌟 Outstanding!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 Excellent!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = ' Try Again'; badge.className = 'success-badge grade-fail'; }
+    }
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    if (timerInterval) clearInterval(timerInterval);
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '⏳ Sending...';
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.getElementById('examDate').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+    let questionsHTML = ''; let globalIdx = 0;
+    examData.sections.forEach((section, sectionIdx) => {
+        questionsHTML += `<tr style="background:linear-gradient(135deg,#6366f1,#4f46e5);color:white;"><td colspan="5" style="padding:12px;font-weight:bold;">📌 ${currentLang==='ar'?'القسم':'Section'} ${sectionIdx+1}: ${section.title[currentLang]}</td></tr>`;
+        section.questions.forEach((q) => {
+            const sel = document.querySelector(`input[name="q${globalIdx}"]:checked`);
+            const sv = sel ? sel.value : null; const cv = correctAnswersMap[globalIdx]; const ic = sv === cv;
+            let sat = currentLang==='ar'?'❌ لم يجب':'❌ No answer'; let sac = '#dc2626';
+            if (sv) { const si = sv.charCodeAt(0)-97; sat = q.options[si][currentLang]; sac = ic?'#059669':'#dc2626'; }
+            const cat = q.options[q.correct][currentLang];
+            const rb = ic?'#f0fdf4':'#fef2f2'; const bl = ic?'4px solid #10b981':'4px solid #ef4444';
+            questionsHTML += `<tr style="background:${rb};border-right:${bl};"><td style="padding:10px;border:1px solid #e5e7eb;text-align:center;font-weight:bold;">${globalIdx+1}</td><td style="padding:10px;border:1px solid #e5e7eb;"><strong style="color:#4338ca;">${currentLang==='ar'?' السؤال:':'❓ Question:'}</strong><br><span style="font-size:13px;">${q.q[currentLang]}</span></td><td style="padding:10px;border:1px solid #e5e7eb;"><strong style="color:${sac};">${currentLang==='ar'?'✍️ إجابة الطالب:':'✍️ Student:'}</strong><br><span style="color:${sac};font-size:13px;">${sat}</span></td><td style="padding:10px;border:1px solid #e5e7eb;"><strong style="color:#059669;">${currentLang==='ar'?'✅ الصحيحة:':'✅ Correct:'}</strong><br><span style="color:#059669;font-size:13px;">${cat}</span></td><td style="padding:10px;border:1px solid #e5e7eb;text-align:center;">${ic?'<span style="font-size:24px;">✅</span>':'<span style="font-size:24px;">❌</span>'}</td></tr>`;
+            globalIdx++;
+        });
+    });
+    const answersHTML = `<div style="font-family:'Segoe UI',Tahoma,Arial;direction:${currentLang==='ar'?'rtl':'ltr'};"><div style="background:linear-gradient(135deg,#6366f1,#4f46e5);color:white;padding:20px;border-radius:10px 10px 0 0;text-align:center;"><h2 style="margin:0;">⚛️ ${currentLang==='ar'?'نتيجة امتحان التأثير الكهروضوئي':'Photoelectric Effect Exam Result'}</h2><p style="margin:5px 0 0;opacity:0.9;">Grade 12 Advanced - Physics</p></div><div style="background:#eef2ff;padding:15px;"><table style="width:100%;border-collapse:collapse;"><tr><td style="padding:8px;font-weight:bold;color:#4338ca;">${currentLang==='ar'?'😊 الاسم:':'😊 Name:'}</td><td style="padding:8px;">${name}</td><td style="padding:8px;font-weight:bold;color:#4338ca;">${currentLang==='ar'?'🏫 الشعبة:':'🏫 Class:'}</td><td style="padding:8px;">${studentClass}</td></tr><tr><td style="padding:8px;font-weight:bold;color:#4338ca;">${currentLang==='ar'?' التاريخ:':'📅 Date:'}</td><td style="padding:8px;">${date}</td><td style="padding:8px;font-weight:bold;color:#4338ca;">${currentLang==='ar'?'🏆 التقدير:':'🏆 Grade:'}</td><td style="padding:8px;">${badge}</td></tr></table></div><div style="background:white;padding:20px;text-align:center;"><div style="display:inline-block;margin:0 15px;"><div style="font-size:32px;font-weight:bold;color:#6366f1;">${score}</div><div style="color:#6b7280;font-size:13px;">${currentLang==='ar'?'الدرجة':'Score'}</div></div><div style="display:inline-block;margin:0 15px;"><div style="font-size:32px;font-weight:bold;color:#059669;">${successRate}%</div><div style="color:#6b7280;font-size:13px;">${currentLang==='ar'?'النسبة':'Rate'}</div></div></div><table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="background:#6366f1;color:white;"><th style="padding:10px;border:1px solid #4f46e5;">#</th><th style="padding:10px;border:1px solid #4f46e5;">${currentLang==='ar'?'السؤال':'Question'}</th><th style="padding:10px;border:1px solid #4f46e5;">${currentLang==='ar'?'إجابة الطالب':'Student'}</th><th style="padding:10px;border:1px solid #4f46e5;">${currentLang==='ar'?'الصحيحة':'Correct'}</th><th style="padding:10px;border:1px solid #4f46e5;">${currentLang==='ar'?'النتيجة':'Result'}</th></tr></thead><tbody>${questionsHTML}</tbody></table><div style="background:linear-gradient(135deg,#eef2ff,#e0e7ff);padding:15px;border-radius:0 0 10px 10px;"><p style="margin:0;color:#4338ca;text-align:center;">⚛️ <strong>${currentLang==='ar'?'أحسنت يا بطل! استمر في إتقان الفيزياء!':'Great job! Keep mastering Physics!'}</strong> ⚛️</p><p style="margin:5px 0 0;color:#4338ca;text-align:center;font-size:12px;">${currentLang==='ar'?'تم الإرسال تلقائياً | Mr. Mohammed Hesham':'Auto-sent | Mr. Mohammed Hesham'}</p></div></div>`;
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, { to_email: TARGET_EMAIL, student_name: name, student_class: studentClass, exam_date: date, total_score: score, success_rate: successRate, grade: badge, answers_table: answersHTML }).then(() => {
+        status.textContent = currentLang==='ar'?'✅ تم الإرسال بنجاح!':'✅ Sent successfully!'; status.style.color = '#059669'; btn.textContent = currentLang==='ar'?'✓ تم':'✓ Sent';
+    }).catch(err => {
+        status.textContent = currentLang==='ar'?'❌ حدث خطأ':'❌ Error'; status.style.color = '#dc2626'; btn.disabled = false; btn.textContent = currentLang==='ar'?'📧 حاول مرة أخرى':'📧 Try Again'; console.error(err);
+    });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = loadState();
+    if (saved && saved.seed) {
+        currentSeed = saved.seed; currentLang = saved.lang || 'ar';
+        timeRemaining = saved.timeRemaining !== undefined ? saved.timeRemaining : TOTAL_TIME;
+        answersVisible = saved.answersVisible || false;
+        document.documentElement.lang = currentLang;
+        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        document.getElementById('btn-ar').classList.toggle('active', currentLang === 'ar');
+        document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+        document.body.classList.toggle('en-mode', currentLang === 'en');
+        document.querySelectorAll('[data-ar][data-en]').forEach(el => { el.innerHTML = currentLang === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en'); });
+    } else { currentSeed = Date.now(); }
+    prepareShuffledExam(); renderExam();
+    if (saved) {
+        if (saved.studentName) document.getElementById('studentName').value = saved.studentName;
+        if (saved.studentClass) document.getElementById('studentClass').value = saved.studentClass;
+        if (saved.examDate) document.getElementById('examDate').value = saved.examDate;
+        if (saved.answers) restoreAnswers(saved.answers);
+    }
+    setupAnswerListeners(); setupInputListeners(); startTimer();
+});
+window.addEventListener('beforeunload', () => saveState(false));
+</script>
+</body>
+</html>
